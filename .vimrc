@@ -1,5 +1,8 @@
+" Some styling
 set background=dark
 colorscheme hybrid_material
+
+let mapleader = ',' 
 " No vi more
 set nocompatible
 " Always wrap lon lines
@@ -15,12 +18,36 @@ autocmd GUIEnter * set visualbell t_vb=
 " Enabling plugins
 filetype plugin on
 
+
+" ----------------Key mappings----------------
 " source $MYVIMRC reloads the saved $MYVIMRC
-:nmap <Leader>s :source $MYVIMRC
+" :nmap <Leader>s :source $MYVIMRC<cr>
 
 " opens $MYVIMRC for editing, or use :tabedit $MYVIMRC
-:nmap <Leader>v :e $MYVIMRC
+:nmap <Leader>v :tabedit $MYVIMRC<cr>
+:nmap <Leader><space> :nohlsearch<cr>
 
+
+
+" -------------------Searching----------------------------
+set hlsearch
+set incsearch
+
+
+
+
+
+" -----------------Autocommands---------------------
+" Automaticly source .vimrc file on save
+autocmd BufWritePost .vimrc source %
+
+
+
+
+
+
+
+" -----------------------Plugins------------------------
 call plug#begin()
 Plug 'tpope/vim-sensible'
 
