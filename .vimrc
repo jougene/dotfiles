@@ -19,6 +19,20 @@ autocmd GUIEnter * set visualbell t_vb=
 filetype plugin on
 
 
+" ----------------Visuals---------------------
+set guioptions-=l
+set guioptions-=L
+set guioptions-=r
+set guioptions-=R
+
+" ----------------Split management----------------
+set splitbelow
+set splitright
+
+nmap <C-J> <C-W><C-J>
+nmap <C-H> <C-W><C-H>
+nmap <C-K> <C-W><C-K>
+nmap <C-L> <C-W><C-L>
 " ----------------Key mappings----------------
 " source $MYVIMRC reloads the saved $MYVIMRC
 " :nmap <Leader>s :source $MYVIMRC<cr>
@@ -39,11 +53,17 @@ set incsearch
 
 " -----------------Autocommands---------------------
 " Automaticly source .vimrc file on save
-autocmd BufWritePost .vimrc source %
+augroup autosourcing
+	autocmd!
+	autocmd BufWritePost .vimrc source %
+augroup END
 
 
-
-
+" -----------------Keymap cirillization
+" set keymap=russian-jcukenwin
+" set iminsert=0
+" set imsearch=0
+" highlight lCursor guifg=NONE guibg=Cyan
 
 
 
