@@ -38,8 +38,9 @@ nmap <C-L> <C-W><C-L>
 " :nmap <Leader>s :source $MYVIMRC<cr>
 
 " opens $MYVIMRC for editing, or use :tabedit $MYVIMRC
-:nmap <Leader>v :tabedit $MYVIMRC<cr>
-:nmap <Leader><space> :nohlsearch<cr>
+:nmap <leader>v :tabedit $MYVIMRC<cr>
+:nmap <leader><space> :nohlsearch<cr>
+:nmap <silent><leader><leader> :NERDTreeToggle<cr>
 
 
 
@@ -83,5 +84,12 @@ Plug 'tpope/vim-fugitive'
 " Themes
 " Plug 'tyrannicaltoucan/vim-quantum'
 Plug 'kristijanhusak/vim-hybrid-material' 
+
+" Clojure
+Plug 'guns/vim-clojure-static'
+Plug 'tpope/vim-leiningen'
+Plug 'tpope/vim-classpath'
+Plug 'tpope/vim-fireplace'
+Plug 'venantius/vim-eastwood'
 
 call plug#end()
