@@ -66,8 +66,6 @@ augroup END
 " set imsearch=0
 " highlight lCursor guifg=NONE guibg=Cyan
 
-
-
 " -----------------------Plugins------------------------
 call plug#begin()
 Plug 'tpope/vim-sensible'
