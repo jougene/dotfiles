@@ -18,7 +18,14 @@ autocmd GUIEnter * set visualbell t_vb=
 " Enabling plugins
 filetype plugin on
 
-
+" set tabs settings
+set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
+    
+"folding settings
+set foldmethod=syntax
+set foldnestmax=10      "deepest fold is 10 levels
+set nofoldenable        "dont fold by default
+set foldlevel=1         "this is just what i use
 " ----------------Visuals---------------------
 set guioptions-=l
 set guioptions-=L
@@ -29,8 +36,8 @@ set guioptions-=R
 set splitbelow
 set splitright
 
-nmap <C-J> <C-W><C-J>
 nmap <C-H> <C-W><C-H>
+nmap <C-J> <C-W><C-J>
 nmap <C-K> <C-W><C-K>
 nmap <C-L> <C-W><C-L>
 " ----------------Key mappings----------------
@@ -38,11 +45,12 @@ nmap <C-L> <C-W><C-L>
 " :nmap <Leader>s :source $MYVIMRC<cr>
 
 " opens $MYVIMRC for editing, or use :tabedit $MYVIMRC
-:nmap <leader>v :tabedit $MYVIMRC<cr>
-:nmap <leader><space> :nohlsearch<cr>
-:nmap <silent><leader><leader> :NERDTreeToggle<cr>
+:nmap <Leader>v :tabedit $MYVIMRC<cr>
+:nmap <Leader><space> :nohlsearch<cr>
+:nmap <Leader><Leader> :NERDTreeToggle<cr>
 
 
+imap <C-o> <esc>o
 
 " -------------------Searching----------------------------
 set hlsearch
@@ -65,6 +73,8 @@ augroup END
 " set iminsert=0
 " set imsearch=0
 " highlight lCursor guifg=NONE guibg=Cyan
+
+
 
 " -----------------------Plugins------------------------
 call plug#begin()
@@ -89,5 +99,8 @@ Plug 'tpope/vim-leiningen'
 Plug 'tpope/vim-classpath'
 Plug 'tpope/vim-fireplace'
 Plug 'venantius/vim-eastwood'
+Plug 'airblade/vim-gitgutter'
 
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'elzr/vim-json'
 call plug#end()
