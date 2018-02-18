@@ -1,0 +1,12 @@
+---
+- hosts: all
+  tasks:
+    - name: Install virtualbox
+      apt: name=vurtualbox state=latest
+
+    - name: Download vagrant
+      get_url: url={{ vagrant_download_url }} dest={{ vagrant_tmp }}
+
+    - name: Install vagrant
+      apt: deb={{ vagrant_tmp_deb }}
+      

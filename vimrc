@@ -103,4 +103,5 @@ Plug 'airblade/vim-gitgutter'
 
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'elzr/vim-json'
+Plug 'StanAngeloff/php.vim'
 call plug#end()

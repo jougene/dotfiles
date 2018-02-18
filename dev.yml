@@ -1,0 +1,12 @@
+---
+- hosts: all
+  tasks:
+    - name: Install packages
+      apt: name={{ item }} update_cache=true state=latest
+      become: yes
+      with_items:
+        - git
+        - vim
+        - zip
+        - vurtualbox
+ 
