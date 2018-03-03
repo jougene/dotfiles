@@ -26,6 +26,13 @@ set foldmethod=syntax
 set foldnestmax=10      "deepest fold is 10 levels
 set nofoldenable        "dont fold by default
 set foldlevel=1         "this is just what i use
+" plugins settings
+" " ctrlp 
+let g:ctrlp_by_filename = 1
+let g:ctrlp_working_path_mode = 'wr'
+let g:ctrlp_buftag_types = {
+	\'php': '--php-kinds=icdf'
+\}
 " ----------------Visuals---------------------
 set guioptions-=l
 set guioptions-=L
@@ -45,13 +52,13 @@ nmap <C-L> <C-W><C-L>
 " :nmap <Leader>s :source $MYVIMRC<cr>
 
 " opens $MYVIMRC for editing, or use :tabedit $MYVIMRC
-:nmap <Leader>v :tabedit $MYVIMRC<cr>
-:nmap <Leader><space> :nohlsearch<cr>
-:nmap <Leader><Leader> :NERDTreeToggle<cr>
+nmap <Leader>v :tabedit $MYVIMRC<cr>
+nmap <Leader><space> :nohlsearch<cr>
+nmap <Leader><Leader> :NERDTreeToggle<cr>
 
 
 imap <C-o> <esc>o
-
+map <leader>r :NERDTreeFind<cr>
 " -------------------Searching----------------------------
 set hlsearch
 set incsearch
@@ -104,4 +111,5 @@ Plug 'airblade/vim-gitgutter'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'elzr/vim-json'
 Plug 'StanAngeloff/php.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 call plug#end()
