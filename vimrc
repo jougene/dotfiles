@@ -20,7 +20,7 @@ filetype plugin on
 
 " set tabs settings
 set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
-    
+
 "folding settings
 set foldmethod=syntax
 set foldnestmax=10      "deepest fold is 10 levels
@@ -31,8 +31,15 @@ set foldlevel=1         "this is just what i use
 let g:ctrlp_by_filename = 1
 let g:ctrlp_working_path_mode = 'wr'
 let g:ctrlp_buftag_types = {
-	\'php': '--php-kinds=icdf'
-\}
+            \'php': '--php-kinds=icdf'
+            \}
+" " auto use namespace
+function! IPhpInsertUse()
+    call PhpInsertUse()
+    call feedkeys('a',  'n')
+endfunction
+autocmd FileType php inoremap <Leader>u <Esc>:call IPhpInsertUse()<CR>
+autocmd FileType php noremap <Leader>u :call PhpInsertUse()<CR>
 " ----------------Visuals---------------------
 set guioptions-=l
 set guioptions-=L
@@ -55,7 +62,8 @@ nmap <C-L> <C-W><C-L>
 nmap <Leader>v :tabedit $MYVIMRC<cr>
 nmap <Leader><space> :nohlsearch<cr>
 nmap <Leader><Leader> :NERDTreeToggle<cr>
-
+nmap <C-r> :CtrlPBufTag<cr>
+nmap <C-e> :CtrlPMRUFiles<cr>
 
 imap <C-o> <esc>o
 map <leader>r :NERDTreeFind<cr>
@@ -70,17 +78,9 @@ set incsearch
 " -----------------Autocommands---------------------
 " Automaticly source .vimrc file on save
 augroup autosourcing
-	autocmd!
-	autocmd BufWritePost .vimrc source %
+    autocmd!
+    autocmd BufWritePost .vimrc source %
 augroup END
-
-
-" -----------------Keymap cirillization
-" set keymap=russian-jcukenwin
-" set iminsert=0
-" set imsearch=0
-" highlight lCursor guifg=NONE guibg=Cyan
-
 
 
 " -----------------------Plugins------------------------
@@ -112,4 +112,5 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'elzr/vim-json'
 Plug 'StanAngeloff/php.vim'
 Plug 'ctrlpvim/ctrlp.vim'
+Plug 'arnaud-lb/vim-php-namespace'
 call plug#end()
