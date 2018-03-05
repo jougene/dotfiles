@@ -62,7 +62,9 @@ nmap <C-L> <C-W><C-L>
 nmap <Leader>v :tabedit $MYVIMRC<cr>
 nmap <Leader><space> :nohlsearch<cr>
 nmap <Leader><Leader> :NERDTreeToggle<cr>
+"Browse for functions vars and so on
 nmap <C-r> :CtrlPBufTag<cr>
+"Browse recent files
 nmap <C-e> :CtrlPMRUFiles<cr>
 
 imap <C-o> <esc>o
