@@ -7,10 +7,15 @@ let mapleader = ','
 set nocompatible
 " Always wrap lon lines
 set wrap
-
+" find ctags file in current dir
+set tags=./tags,tags;$HOME
 " Show line numbers
 set number
-
+set ignorecase
+set smartcase
+set shortmess+=A
+" auto save files when switching between buffers
+set autowriteall
 "Disable annoying beepings
 set noerrorbells visualbell t_vb=
 autocmd GUIEnter * set visualbell t_vb=
@@ -27,19 +32,66 @@ set foldnestmax=10      "deepest fold is 10 levels
 set nofoldenable        "dont fold by default
 set foldlevel=1         "this is just what i use
 " plugins settings
+" easytags
+let g:easytags_file = './tags'
+let g:easytags_auto_highlight = 0
+let g:easytags_events = ['BufWritePost']
+let g:easytags_async = 1
+
 " " ctrlp 
 let g:ctrlp_by_filename = 1
 let g:ctrlp_working_path_mode = 'wr'
 let g:ctrlp_buftag_types = {
             \'php': '--php-kinds=icdf'
             \}
-" " auto use namespace
+" php-namespace
+" "auto use namespace settings
 function! IPhpInsertUse()
     call PhpInsertUse()
     call feedkeys('a',  'n')
 endfunction
-autocmd FileType php inoremap <Leader>u <Esc>:call IPhpInsertUse()<CR>
-autocmd FileType php noremap <Leader>u :call PhpInsertUse()<CR>
+autocmd FileType php inoremap <Leader>n <Esc>:call IPhpInsertUse()<CR>
+autocmd FileType php noremap <Leader>n :call PhpInsertUse()<CR>
+
+function! IPhpExpandClass()
+    call PhpExpandClass()
+    call feedkeys('a', 'n')
+endfunction
+autocmd FileType php inoremap <Leader>nf <Esc>:call IPhpExpandClass()<CR>
+autocmd FileType php noremap <Leader>nf :call PhpExpandClass()<CR>
+
+" path mappings for vdebug
+let g:vdebug_options={}
+let g:vdebug_options.path_maps = {"/application/drimsim": "/home/jgne/code/drimsim/drimsim-backend/"}
+
+
+
+
+" Running tests in vagrant from host machine
+function! VagrantTransform(cmd) abort
+  let vagrant_project = '/application/drimsim' 
+  return 'vagrant ssh --command '.shellescape('cd '.vagrant_project.'; '.a:cmd)
+endfunction
+
+let g:test#custom_transformations = {'vagrant': function('VagrantTransform')}
+let g:test#transformation = 'vagrant'
+
+" " snippets settings 
+" Trigger configuration. Do not use <tab> if you use
+" https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+let g:UltiSnipsSnippetDirectories=["UltiSnips"]
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+
+
+
+
+
+
 " ----------------Visuals---------------------
 set guioptions-=l
 set guioptions-=L
@@ -68,7 +120,19 @@ nmap <C-r> :CtrlPBufTag<cr>
 nmap <C-e> :CtrlPMRUFiles<cr>
 
 imap <C-o> <esc>o
-map <leader>r :NERDTreeFind<cr>
+"Show current file in nerd tree
+map <leader>1 :NERDTreeFind<cr>
+nmap <F8> :TagbarToggle<CR>
+vnoremap <C-c> "*y
+
+
+" Running tests keymaps
+nmap <silent> <leader>t :TestNearest<CR>
+nmap <silent> <leader>T :TestFile<CR>
+nmap <silent> <leader>s :TestSuite<CR>
+nmap <silent> <leader>a :TestLast<CR>
+nmap <silent> <leader>g :TestVisit<CR>
+
 " -------------------Searching----------------------------
 set hlsearch
 set incsearch
@@ -109,10 +173,22 @@ Plug 'tpope/vim-classpath'
 Plug 'tpope/vim-fireplace'
 Plug 'venantius/vim-eastwood'
 Plug 'airblade/vim-gitgutter'
-
+" ---Clojure
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'elzr/vim-json'
 Plug 'StanAngeloff/php.vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'arnaud-lb/vim-php-namespace'
+Plug 'rking/ag.vim'
+" Track the engine.
+Plug 'SirVer/ultisnips'
+" Snippets are separated from the engine. Add this if you want them:
+Plug 'honza/vim-snippets'
+"For comment code
+Plug 'scrooloose/nerdcommenter'
+Plug 'joonty/vdebug'
+Plug 'xolox/vim-easytags'
+Plug 'xolox/vim-misc'
+Plug 'janko-m/vim-test'
 call plug#end()
+
