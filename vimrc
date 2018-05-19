@@ -190,5 +190,7 @@ Plug 'joonty/vdebug'
 Plug 'xolox/vim-easytags'
 Plug 'xolox/vim-misc'
 Plug 'janko-m/vim-test'
+" Syntax checkers
+Plug 'vim-syntastic/syntastic'
 call plug#end()
 
