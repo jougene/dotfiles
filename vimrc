@@ -5,7 +5,7 @@ colorscheme hybrid_material
 let mapleader = ',' 
 " No vi more
 set nocompatible
-" Always wrap lon lines
+" Always wrap long lines
 set wrap
 " find ctags file in current dir
 set tags=./tags,tags;$HOME
@@ -60,21 +60,9 @@ endfunction
 autocmd FileType php inoremap <Leader>nf <Esc>:call IPhpExpandClass()<CR>
 autocmd FileType php noremap <Leader>nf :call PhpExpandClass()<CR>
 
-" path mappings for vdebug
-let g:vdebug_options={}
-let g:vdebug_options.path_maps = {"/application/drimsim": "/home/jgne/code/drimsim/drimsim-backend/"}
-
-
-
-
-" Running tests in vagrant from host machine
-function! VagrantTransform(cmd) abort
-  let vagrant_project = '/application/drimsim' 
-  return 'vagrant ssh --command '.shellescape('cd '.vagrant_project.'; '.a:cmd)
-endfunction
-
-let g:test#custom_transformations = {'vagrant': function('VagrantTransform')}
-let g:test#transformation = 'vagrant'
+" " syntastic
+let g:syntastic_php_checkers = ["php", "phpcs"]
+let g:syntastic_php_phpcs_args = "--standard=PSR2"
 
 " " snippets settings 
 " Trigger configuration. Do not use <tab> if you use
