@@ -1,6 +1,7 @@
 " Some styling
 set background=dark
 colorscheme hybrid_material
+let g:airline_powerline_fonts = 1
 
 let mapleader = ',' 
 " No vi more
@@ -44,6 +45,7 @@ let g:ctrlp_working_path_mode = 'wr'
 let g:ctrlp_buftag_types = {
             \'php': '--php-kinds=icdf'
             \}
+let g:ctrlp_custom_ignore = 'vendor\|git'
 " php-namespace
 " "auto use namespace settings
 function! IPhpInsertUse()
@@ -180,5 +182,6 @@ Plug 'xolox/vim-misc'
 Plug 'janko-m/vim-test'
 " Syntax checkers
 Plug 'vim-syntastic/syntastic'
+Plug 'elixir-editors/vim-elixir'
 call plug#end()
 
