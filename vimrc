@@ -1,67 +1,48 @@
-" Some styling
+" settings 
 set background=dark
-colorscheme hybrid_material
-let g:airline_powerline_fonts = 1
-
-let mapleader = ',' 
-" No vi more
 set nocompatible
-" Always wrap long lines
-set wrap
-" find ctags file in current dir
-set tags=./tags,tags;$HOME
-" Show line numbers
+set nowrap
+set conceallevel=0
 set number
 set ignorecase
 set smartcase
-set shortmess+=A
-" auto save files when switching between buffers
-set autowriteall
-"Disable annoying beepings
-set noerrorbells visualbell t_vb=
-autocmd GUIEnter * set visualbell t_vb=
-
-" Enabling plugins
-filetype plugin on
-
-" set tabs settings
-set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
-
-"folding settings
+set shortmess+=A                                                        
+set omnifunc=syntaxcomplete#Complete
+set autowriteall                                                        " auto save files when switching between buffers
+set noerrorbells visualbell t_vb=                                       " disable annoying beepings
+set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab             "
+set shiftround                                                          " 
 set foldmethod=syntax
-set foldnestmax=10      "deepest fold is 10 levels
-set nofoldenable        "dont fold by default
-set foldlevel=1         "this is just what i use
-" plugins settings
-" easytags
+set foldnestmax=10                                                      "deepest fold is 10 levels
+set nofoldenable                                                        "dont fold by default
+set foldlevel=1                                                         "this is just what i use
+"set clipboard+=unnamedplus
+set hlsearch
+set incsearch
+set completeopt=noinsert,menuone,noselect
+set splitbelow
+set splitright
+set tags=./tags,tags;$HOME
+
+colorscheme hybrid_material
+let g:airline_powerline_fonts = 1
+let g:hybrid_transparent_background = 1
+let mapleader = ',' 
+let g:vim_json_syntax_conceal = 0
+
 let g:easytags_file = './tags'
 let g:easytags_auto_highlight = 0
 let g:easytags_events = ['BufWritePost']
 let g:easytags_async = 1
 
-" " ctrlp 
 let g:ctrlp_by_filename = 1
 let g:ctrlp_working_path_mode = 'wr'
 let g:ctrlp_buftag_types = {
             \'php': '--php-kinds=icdf'
             \}
 let g:ctrlp_custom_ignore = 'vendor\|git'
-" php-namespace
-" "auto use namespace settings
-function! IPhpInsertUse()
-    call PhpInsertUse()
-    call feedkeys('a',  'n')
-endfunction
-autocmd FileType php inoremap <Leader>n <Esc>:call IPhpInsertUse()<CR>
-autocmd FileType php noremap <Leader>n :call PhpInsertUse()<CR>
-
-function! IPhpExpandClass()
-    call PhpExpandClass()
-    call feedkeys('a', 'n')
-endfunction
-autocmd FileType php inoremap <Leader>nf <Esc>:call IPhpExpandClass()<CR>
-autocmd FileType php noremap <Leader>nf :call PhpExpandClass()<CR>
-
+" find ctags file in current dir
+" Show line numbers
 " " syntastic
 let g:syntastic_php_checkers = ["php", "phpcs"]
 let g:syntastic_php_phpcs_args = "--standard=PSR2"
@@ -72,25 +53,21 @@ let g:syntastic_php_phpcs_args = "--standard=PSR2"
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-let g:UltiSnipsSnippetDirectories=["UltiSnips"]
-
-" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsSnippetDirectories=["mysnippets"]
 let g:UltiSnipsEditSplit="vertical"
 
+autocmd GUIEnter * set visualbell t_vb=
+filetype plugin on
+
+" " phpactor
+nmap <Leader>o :call phpactor#GotoDefinition()<CR>
+nmap <Leader>m :call phpactor#ContextMenu()<CR>
+
+autocmd FileType php setlocal omnifunc=phpactor#Complete
 
 
-
-
-
-" ----------------Visuals---------------------
-set guioptions-=l
-set guioptions-=L
-set guioptions-=r
-set guioptions-=R
 
 " ----------------Split management----------------
-set splitbelow
-set splitright
 
 nmap <C-H> <C-W><C-H>
 nmap <C-J> <C-W><C-J>
@@ -123,65 +100,62 @@ nmap <silent> <leader>s :TestSuite<CR>
 nmap <silent> <leader>a :TestLast<CR>
 nmap <silent> <leader>g :TestVisit<CR>
 
-" -------------------Searching----------------------------
-set hlsearch
-set incsearch
-
-
-
-
-
 " -----------------Autocommands---------------------
 " Automaticly source .vimrc file on save
 augroup autosourcing
     autocmd!
-    autocmd BufWritePost .vimrc source %
+    autocmd BufWritePost ~/.config/nvim/init.vim source %
 augroup END
+
+" -----------------------Complettion--------------------
+" enable ncm2 for all buffers
+autocmd BufEnter * call ncm2#enable_for_buffer()
+
+" IMPORTANTE: :help Ncm2PopupOpen for more information
 
 
 " -----------------------Plugins------------------------
 call plug#begin()
 Plug 'tpope/vim-sensible'
-
 " On-demand loading
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-
 " Git integration
 Plug 'tpope/vim-fugitive'
-
 " Themes
 " Plug 'tyrannicaltoucan/vim-quantum'
 Plug 'kristijanhusak/vim-hybrid-material' 
+" Move lines
+Plug 'matze/vim-move'
 
-" Clojure
-Plug 'guns/vim-clojure-static'
-Plug 'tpope/vim-leiningen'
-Plug 'tpope/vim-classpath'
-Plug 'tpope/vim-fireplace'
-Plug 'venantius/vim-eastwood'
 Plug 'airblade/vim-gitgutter'
-" ---Clojure
 Plug 'ctrlpvim/ctrlp.vim'
+Plug 'jasoncodes/ctrlp-modified.vim'
 Plug 'elzr/vim-json'
 Plug 'StanAngeloff/php.vim'
-Plug 'ctrlpvim/ctrlp.vim'
 Plug 'arnaud-lb/vim-php-namespace'
 Plug 'rking/ag.vim'
+Plug 'jiangmiao/auto-pairs'
 " Track the engine.
 Plug 'SirVer/ultisnips'
 " Snippets are separated from the engine. Add this if you want them:
 Plug 'honza/vim-snippets'
 "For comment code
 Plug 'scrooloose/nerdcommenter'
-Plug 'joonty/vdebug'
 Plug 'xolox/vim-easytags'
 Plug 'xolox/vim-misc'
 Plug 'janko-m/vim-test'
 " Syntax checkers
 Plug 'vim-syntastic/syntastic'
 Plug 'elixir-editors/vim-elixir'
+" Auto Completion
+Plug 'roxma/nvim-yarp'
+Plug 'ncm2/ncm2'
+Plug 'ncm2/ncm2-bufword'
+Plug 'ncm2/ncm2-path'
+Plug 'phpactor/phpactor', {'for': 'php', 'do': 'composer install'}
+Plug 'phpactor/ncm2-phpactor'
+Plug 'adoy/vim-php-refactoring-toolbox'
 call plug#end()
 
