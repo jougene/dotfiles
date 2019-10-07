@@ -11,6 +11,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 " Git integration
 Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
 " Themes
 "Plug 'kristijanhusak/vim-hybrid-material' 
 Plug 'morhetz/gruvbox'
@@ -22,7 +23,6 @@ Plug 'w0rp/ale'
 Plug 'tpope/vim-dispatch'
 
 Plug 'editorconfig/editorconfig-vim'
-Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'elzr/vim-json'
@@ -51,9 +51,9 @@ Plug 'ncm2/ncm2'
 Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-path'
 
-Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
 let g:coc_global_extensions = [
-      \ 'coc-tsserver',
       \ 'coc-tslint',
       \ 'coc-lists',
       \ 'coc-sh',
