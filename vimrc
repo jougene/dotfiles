@@ -18,8 +18,6 @@ Plug 'morhetz/gruvbox'
 " Move lines
 Plug 'matze/vim-move'
 Plug 'terryma/vim-multiple-cursors'
-" Async linting and fixing
-Plug 'w0rp/ale'
 Plug 'tpope/vim-dispatch'
 
 Plug 'editorconfig/editorconfig-vim'
@@ -34,6 +32,9 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'moll/vim-node'
 Plug 'leafgarland/typescript-vim'
 Plug 'pangloss/vim-javascript'
+Plug 'prettier/vim-prettier', {
+  \ 'do': 'yarn install',
+  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
 Plug 'isRuslan/vim-es6'
 Plug 'aklt/plantuml-syntax'
 Plug 'towolf/vim-helm'
@@ -102,22 +103,6 @@ let g:vim_json_syntax_conceal = 0
 let g:gruvbox_contrast_dark='hard'
 let g:loaded_clipboard_provider = 1
 
-let g:ctrlp_by_filename = 1
-let g:ctrlp_working_path_mode = 'wr'
-let g:ctrlp_buftag_types = {
-            \'php': '--php-kinds=icdf'
-            \}
-let g:ctrlp_custom_ignore = 'vendor\|git'
-let g:ale_fix_on_save = 0
-let g:ale_echo_msg_format = '[%linter%] [%severity%] %s'
-let g:ale_php_phpcs_standard = 'PSR2'
-let g:ale_linters = {
-    \ 'php': ['php', 'phpcs', 'phpmd']
-    \ }
-let g:ale_fixers = {
-      \ 'php': ['php_cs_fixer'],
-      \ }
-
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
@@ -133,7 +118,6 @@ au! BufNewFile,BufReadPost *.{yaml,yml} set filetype=yaml foldmethod=indent
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 
 " ----------------Split management----------------
-
 nmap <C-H> <C-W><C-H>
 nmap <C-J> <C-W><C-J>
 nmap <C-K> <C-W><C-K>
