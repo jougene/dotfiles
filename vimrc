@@ -4,9 +4,9 @@ call plug#begin()
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
-Plug 'lxhillwind/leader-clipboard'
 " On-demand loading
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 " Git integration
@@ -27,18 +27,19 @@ Plug 'elzr/vim-json'
 Plug 'StanAngeloff/php.vim'
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
-Plug 'rking/ag.vim'
+" Plug 'rking/ag.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'moll/vim-node'
 Plug 'leafgarland/typescript-vim'
 Plug 'pangloss/vim-javascript'
 Plug 'prettier/vim-prettier', {
   \ 'do': 'yarn install',
-  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
+  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'html'] }
 Plug 'isRuslan/vim-es6'
 Plug 'aklt/plantuml-syntax'
 Plug 'towolf/vim-helm'
 Plug 'digitaltoad/vim-pug'
+Plug 'Olical/conjure', {'tag': 'v4.15.0'}
 " Track the engine.
 Plug 'SirVer/ultisnips'
 " Snippets are separated from the engine. Add this if you want them:
@@ -47,6 +48,7 @@ Plug 'honza/vim-snippets'
 Plug 'scrooloose/nerdcommenter'
 Plug 'xolox/vim-misc'
 Plug 'janko-m/vim-test'
+" Plug 'kassio/neoterm'
 Plug 'roxma/nvim-yarp'
 Plug 'ncm2/ncm2'
 Plug 'ncm2/ncm2-bufword'
@@ -55,17 +57,17 @@ Plug 'ncm2/ncm2-path'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
 let g:coc_global_extensions = [
-      \ 'coc-tslint',
       \ 'coc-lists',
       \ 'coc-sh',
+      \ 'coc-toml',
       \ 'coc-json',
       \ 'coc-eslint',
-      \ 'coc-yaml',
+      \ 'coc-conjure',
       \ 'coc-highlight',
+      \ 'coc-rls',
       \ 'coc-snippets',
       \ 'coc-pairs',
       \ 'coc-docker',
-      \ 'coc-yaml',
       \ 'coc-diagnostic',
       \]
 "Plug 'adoy/vim-php-refactoring-toolbox'
@@ -74,7 +76,8 @@ call plug#end()
 " settings 
 set background=dark
 set nowrap
-set lcs+=space:·
+" set clipboard+=unnamedplus
+"set lcs+=space:·
 set conceallevel=0
 set number
 set ignorecase
@@ -83,7 +86,7 @@ set shortmess+=A
 set omnifunc=syntaxcomplete#Complete
 set autowriteall                                                        " auto save files when switching between buffers
 set noerrorbells visualbell t_vb=                                       " disable annoyingt 
-set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab             "
+set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab             "
 set shiftround                                                          " for smart tabs symbols count
 set foldmethod=syntax
 set foldnestmax=10                                                      " deepest fold is 10 levels
@@ -101,7 +104,9 @@ let g:airline_powerline_fonts = 1
 let mapleader = ',' 
 let g:vim_json_syntax_conceal = 0
 let g:gruvbox_contrast_dark='hard'
-let g:loaded_clipboard_provider = 1
+" let g:loaded_clipboard_provider = 1
+
+let g:NERDSpaceDelims = 1
 
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
@@ -110,12 +115,14 @@ let g:UltiSnipsSnippetDirectories=[expand('~/.config/nvim/mysnippets')]
 let g:UltiSnipsEditSplit="vertical"
 
 let test#strategy = "neovim"
+let test#neovim#term_position = "vert"
+let g:test#javascript#mocha#executable = 'docker-compose exec api npx mocha'
 autocmd GUIEnter * set visualbell t_vb=
 filetype plugin on
 
 au BufReadPost Dockerfile.* set syntax=dockerfile
-au! BufNewFile,BufReadPost *.{yaml,yml} set filetype=yaml foldmethod=indent
-autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+" au! BufNewFile,BufReadPost *.{yaml,yml} set filetype=yaml foldmethod=indent
+" autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 
 " ----------------Split management----------------
 nmap <C-H> <C-W><C-H>
@@ -131,7 +138,22 @@ nnoremap <silent> <Leader>ag :exe 'Ag!' expand('<cword>')<cr>
 nnoremap <C-\> :call NERDComment(0,"toggle")<CR>
 vnoremap <C-\> :call NERDComment(0,"toggle")<CR>
 nnoremap <C-p> :GFiles .<CR>
+" nnoremap <C-f> :Ag 
+nnoremap <silent> <C-f> :Rg <C-R><C-W><CR>
+nnoremap <C-g> :Rg 
 nnoremap <leader>b :Buffers<CR>
+
+" " Copy to clipboard
+vnoremap  <leader>y  "+y
+nnoremap  <leader>Y  "+yg_
+nnoremap  <leader>y  "+y
+nnoremap  <leader>yy  "+yy
+
+" " Paste from clipboard
+nnoremap <leader>p "+p
+nnoremap <leader>P "+P
+vnoremap <leader>p "+p
+vnoremap <leader>P "+P
 
 """ CoC
 " Use `[c` and `]c` to navigate diagnostics
@@ -162,6 +184,7 @@ xmap <leader>f <Plug>(coc-format-selected)
 nmap <leader>f <Plug>(coc-format-selected)
 " Use `:Format` to format current buffer
 command! -nargs=0 Format :call CocAction('format')
+command! JsonPretty execute ":%!python3 -m json.tool"
 " ----------------Key mappings----------------
 " source $MYVIMRC reloads the saved $MYVIMRC
 " :nmap <Leader>s :source $MYVIMRC<cr>
@@ -183,9 +206,9 @@ vnoremap <C-c> "*y
 
 " Running tests keymaps
 nmap <silent> <leader>tt :TestNearest<CR>
+nmap <silent> <leader>tl :TestLast<CR>
 nmap <silent> <leader>tf :TestFile<CR>
 nmap <silent> <leader>ts :TestSuite<CR>
-nmap <silent> <leader>a  :TestLast<CR>
 nmap <silent> <leader>tv :TestVisit<CR>
 
 " -----------------Autocommands---------------------
