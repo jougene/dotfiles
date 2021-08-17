@@ -24,6 +24,7 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'elzr/vim-json'
+Plug 'posva/vim-vue'
 Plug 'StanAngeloff/php.vim'
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
@@ -122,7 +123,7 @@ filetype plugin on
 
 au BufReadPost Dockerfile.* set syntax=dockerfile
 " au! BufNewFile,BufReadPost *.{yaml,yml} set filetype=yaml foldmethod=indent
-" autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+autocmd FileType rust setlocal ts=2 sts=2 sw=2 expandtab
 
 " ----------------Split management----------------
 nmap <C-H> <C-W><C-H>
