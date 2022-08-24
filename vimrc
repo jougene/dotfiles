@@ -24,13 +24,16 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'elzr/vim-json'
+Plug 'cespare/vim-toml'
 Plug 'posva/vim-vue'
 Plug 'StanAngeloff/php.vim'
+Plug 'elixir-editors/vim-elixir'
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
 " Plug 'rking/ag.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'moll/vim-node'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'leafgarland/typescript-vim'
 Plug 'pangloss/vim-javascript'
 Plug 'prettier/vim-prettier', {
@@ -54,6 +57,7 @@ Plug 'roxma/nvim-yarp'
 Plug 'ncm2/ncm2'
 Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-path'
+Plug 'rest-nvim/rest.nvim'
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
@@ -66,10 +70,13 @@ let g:coc_global_extensions = [
       \ 'coc-conjure',
       \ 'coc-highlight',
       \ 'coc-rls',
+      \ 'coc-go',
+      \ 'coc-elixir',
       \ 'coc-snippets',
       \ 'coc-pairs',
       \ 'coc-docker',
       \ 'coc-diagnostic',
+      \ 'coc-lua'
       \]
 "Plug 'adoy/vim-php-refactoring-toolbox'
 call plug#end()
@@ -81,6 +88,7 @@ set nowrap
 "set lcs+=space:·
 set conceallevel=0
 set number
+set colorcolumn=120
 set ignorecase
 set smartcase
 set shortmess+=A                                                        
@@ -100,6 +108,7 @@ set completeopt=noinsert,menuone,noselect
 set splitbelow
 set splitright
 set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz
+set mmp=10000
 
 let g:airline_powerline_fonts = 1
 let mapleader = ',' 
@@ -117,13 +126,17 @@ let g:UltiSnipsEditSplit="vertical"
 
 let test#strategy = "neovim"
 let test#neovim#term_position = "vert"
-let g:test#javascript#mocha#executable = 'docker-compose exec api npx mocha'
+" let g:test#javascript#mocha#executable = 'docker-compose exec api npx mocha'
 autocmd GUIEnter * set visualbell t_vb=
 filetype plugin on
 
 au BufReadPost Dockerfile.* set syntax=dockerfile
 " au! BufNewFile,BufReadPost *.{yaml,yml} set filetype=yaml foldmethod=indent
 autocmd FileType rust setlocal ts=2 sts=2 sw=2 expandtab
+autocmd FileType go setlocal ts=2 sts=2 sw=2 expandtab
+autocmd FileType mod setlocal ts=2 sts=2 sw=2 expandtab
+autocmd FileType sum setlocal ts=2 sts=2 sw=2 expandtab
+au BufRead,BufNewFile changelog* setfiletype sh
 
 " ----------------Split management----------------
 nmap <C-H> <C-W><C-H>
@@ -136,8 +149,8 @@ nmap j gj
 nmap k gk
 nnoremap ff :normal! gg=G<CR>
 nnoremap <silent> <Leader>ag :exe 'Ag!' expand('<cword>')<cr> 
-nnoremap <C-\> :call NERDComment(0,"toggle")<CR>
-vnoremap <C-\> :call NERDComment(0,"toggle")<CR>
+nnoremap <C-\> :call nerdcommenter#Comment(0,"toggle")<CR>
+vnoremap <C-\> :call nerdcommenter#Comment(0,"toggle")<CR>
 nnoremap <C-p> :GFiles .<CR>
 " nnoremap <C-f> :Ag 
 nnoremap <silent> <C-f> :Rg <C-R><C-W><CR>
@@ -180,12 +193,33 @@ function! s:show_documentation()
     call CocAction('doHover')
   endif
 endfunction
+
+" function! NERDCommenter_before()
+  " if &ft == 'vue'
+    " let g:ft = 'vue'
+    " let stack = synstack(line('.'), col('.'))
+    " if len(stack) > 0
+      " let syn = synIDattr((stack)[0], 'name')
+      " if len(syn) > 0
+        " exe 'setf ' . substitute(tolower(syn), '^vue_', '', '')
+      " endif
+    " endif
+  " endif
+" endfunction
+
+" function! NERDCommenter_after()
+  " if g:ft == 'vue'
+    " setf vue
+    " let g:ft = ''
+  " endif
+" endfunction
 " Remap for format selected region
 xmap <leader>f <Plug>(coc-format-selected)
 nmap <leader>f <Plug>(coc-format-selected)
 " Use `:Format` to format current buffer
 command! -nargs=0 Format :call CocAction('format')
 command! JsonPretty execute ":%!python3 -m json.tool"
+command! Blame Git blame
 " ----------------Key mappings----------------
 " source $MYVIMRC reloads the saved $MYVIMRC
 " :nmap <Leader>s :source $MYVIMRC<cr>
