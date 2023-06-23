@@ -1,1 +1,5 @@
+require('plugins.gitsigns')
+require('plugins.lualine')
+require('plugins.telescope')
+require('plugins.tree')
 require('plugins.treesitter')
