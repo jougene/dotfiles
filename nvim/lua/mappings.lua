@@ -36,6 +36,7 @@ bind('n', '<leader>bb',   '<cmd>Telescope buffers show_all_buffers=true<CR>', op
 bind('n', '<leader>ff',   '<cmd>Telescope find_files<CR>', opts)
 bind('n', '<C-p>',        '<cmd>Telescope git_files<CR>', opts)
 bind('n', '<C-g>',        '<cmd>Telescope live_grep<CR>', opts)
+bind('n', '<C-e>',        '<cmd>Telescope oldfiles<CR>', opts)
 
 -- Comments
 bind('n', '<C-\\>', require('Comment.api').toggle.linewise.current)

@@ -41,7 +41,7 @@ null_ls.setup({
 
 lsp.setup()
 
-local on_attach = function(client)
-    require("lsp-format").on_attach(client)
-end
-require("lspconfig").tsserver.setup { on_attach = on_attach }
+-- local on_attach = function(client)
+--     require("lsp-format").on_attach(client)
+-- end
+-- require("lspconfig").tsserver.setup { on_attach = on_attach }

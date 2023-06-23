@@ -15,11 +15,6 @@ local editor_options = {
   langmenu = "en_US.UTF-8",
   spelllang="en_us",
   spell = "true",
-  foldmethod = "syntax",
-  foldnestmax = 10,
-  -- nofoldenable = "true",
-  foldlevel = 1,
-
 
   -- backup = false,
   swapfile = false,
@@ -35,7 +30,7 @@ local editor_options = {
   -- showbreak = "↪| ",
   -- hlsearch = true,
   -- incsearch = true,
-  -- ignorecase = true,
+  ignorecase = true,
   -- showmode = false,
   linespace = 2,
   termguicolors = true,
@@ -45,6 +40,11 @@ local editor_options = {
   -- updatetime = 100,
   -- timeoutlen = 500
 }
+
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt.foldenable = false
+vim.opt.foldlevel = 2
 
 local window_options = {
   number = true,
