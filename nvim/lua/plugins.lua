@@ -46,6 +46,13 @@ return require('packer').startup(function(use)
     end
   }
 
+  use {
+    "mhanberg/output-panel.nvim",
+    config = function()
+      require("output_panel"). setup()
+    end
+  }
+
   use { 
     "rest-nvim/rest.nvim",
   requires = { "nvim-lua/plenary.nvim" },

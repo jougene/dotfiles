@@ -1,8 +1,8 @@
 -- local servers = { 'lua_ls', 'tsserver', 'solargraph', 'elixirls', 'erlangls' }
 -- local servers = {'elixirls', 'gopls'}
-local servers = { 'lua_ls', 'tsserver', 'gopls' }
+local servers = { 'lua_ls', 'tsserver', 'gopls', 'elixirls' }
 
-local lsp_format = require("lsp-format")
+-- local lsp_format = require("lsp-format")
 local lsp = require('lsp-zero').preset('recommended')
 
 lsp.ensure_installed(servers)
@@ -19,7 +19,7 @@ lsp.on_attach(function(_client, bufnr)
 end)
 
 for _, server in pairs(servers) do
-  local config  = require("lsp.servers.".. server)
+  local config = require("lsp.servers." .. server)
   lsp.configure(server, config)
 end
 
@@ -27,21 +27,22 @@ end
 local null_ls = require('null-ls')
 local null_opts = lsp.build_options('null-ls', {})
 
+-- local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+
 null_ls.setup({
   on_attach = null_opts.on_attach,
   sources = {
-    null_ls.builtins.diagnostics.eslint,
-    null_ls.builtins.code_actions.eslint,
+    -- null_ls.builtins.diagnostics.eslint,
+    -- null_ls.builtins.diagnostics.prettier,
+    -- null_ls.builtins.diagnostics.lua_ls,
+    -- null_ls.builtins.code_actions.eslint,
+    -- null_ls.builtins.code_actions.prettier,
+    -- null_ls.builtins.formatting.eslint,
     -- null_ls.builtins.formatting.prettier,
-    null_ls.builtins.formatting.fixjson,
-    null_ls.builtins.formatting.lua_format,
-    null_ls.builtins.diagnostics.credo
+    -- null_ls.builtins.formatting.fixjson,
+    -- null_ls.builtins.formatting.lua_format,
+    -- null_ls.builtins.diagnostics.credo
   }
 })
 
 lsp.setup()
-
--- local on_attach = function(client)
---     require("lsp-format").on_attach(client)
--- end
--- require("lspconfig").tsserver.setup { on_attach = on_attach }
