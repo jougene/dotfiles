@@ -18,6 +18,13 @@ lsp.on_attach(function(_client, bufnr)
   buf_set_keymap('n', '<space>f', '<cmd>LspZeroFormat<CR>', opts)
 end)
 
+-- lsp.setup_nvim_cmp({
+--   preselect = 'none',
+--   completion = {
+--     completeopt = 'menu,menuone,noinsert,noselect'
+--   },
+-- })
+
 for _, server in pairs(servers) do
   local config = require("lsp.servers." .. server)
   lsp.configure(server, config)
@@ -41,7 +48,7 @@ null_ls.setup({
     -- null_ls.builtins.formatting.prettier,
     -- null_ls.builtins.formatting.fixjson,
     -- null_ls.builtins.formatting.lua_format,
-    -- null_ls.builtins.diagnostics.credo
+    null_ls.builtins.diagnostics.credo
   }
 })
 

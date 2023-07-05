@@ -45,5 +45,8 @@ bind('x', '<C-\\>', function()
     require('Comment.api').toggle.linewise(vim.fn.visualmode())
 end)
 
+bind('n', '<space>n', '<cmd>lua vim.diagnostic.goto_next()<CR>')
+bind('n', '<space>p', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
+
 --Rest client
 bind('n', '<C-CR>', '<Plug>RestNvim')
